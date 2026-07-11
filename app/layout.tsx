@@ -48,14 +48,14 @@ export const metadata: Metadata = {
     title: "Ángela Sophia | Psicóloga en Pereira, Risaralda",
     description:
       "Terapia psicológica profesional en Pereira. Especializada en acompañamiento emocional para adultos y adolescentes. Agenda tu cita.",
-    images: [{ url: "/assets/profile-image.png", width: 1200, height: 1200, alt: "Ángela Sophia" }],
+    images: [{ url: "/assets/profile-image.jpg", width: 700, height: 1225, alt: "Ángela Sophia" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ángela Sophia | Psicóloga en Pereira, Risaralda",
     description:
       "Terapia psicológica profesional en Pereira. Especializada en acompañamiento emocional para adultos y adolescentes.",
-    images: ["/assets/profile-image.png"],
+    images: ["/assets/profile-image.jpg"],
   },
   robots: { index: true, follow: true },
 };

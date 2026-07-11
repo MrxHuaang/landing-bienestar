@@ -53,7 +53,7 @@ export default function About() {
             <div className="relative mx-auto w-full max-w-sm lg:sticky lg:top-28">
               <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
                 <Image
-                  src="/assets/profile-image.png"
+                  src="/assets/profile-image.jpg"
                   alt="Ángela Sophia, psicóloga profesional en Pereira, Risaralda"
                   fill
                   sizes="(max-width: 1024px) 80vw, 40vw"
