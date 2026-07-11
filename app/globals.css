@@ -1,26 +1,209 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Design System — Angela Sophia
+   Editorial / grotesco (ref. Obys · AIM). Plano, sin gradientes.
+   Base hueso · tinta verde casi negra · acento verde bosque.
+   ============================================================ */
+@theme {
+  /* Superficies */
+  --color-bone: #eceae3;
+  --color-paper: #f4f2ec;
+  --color-sand: #dfd8c8;
+  --color-ink: #14201a;
+  --color-ink-soft: #3a453d;
+  --color-muted: #626a60;
+  --color-line: #c9c3b4;
+
+  /* Acento — verde bosque */
+  --color-accent-soft: #d8e3dd;
+  --color-accent: #2f5d4e;
+  --color-accent-deep: #21473a;
+
+  /* WhatsApp */
+  --color-whatsapp: #1faa53;
+  --color-whatsapp-deep: #18813f;
+
+  /* Tipografía */
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-instrument);
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- Base ---------- */
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bone);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Tipografía display (grotesca, enorme, apretada) ---------- */
+.font-display {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.text-mega {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 0.6rem + 9.5vw, 9.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+
+.text-display {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.9rem, 1rem + 7.4vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.text-h1 {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.3rem, 1.2rem + 4.6vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.text-h2 {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 3.15rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.text-lead {
+  font-size: clamp(1.05rem, 0.98rem + 0.5vw, 1.35rem);
+  line-height: 1.6;
+}
+
+/* Etiqueta mono/tracked */
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.label-sm {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Número índice */
+.index {
+  font-family: var(--font-display), ui-sans-serif, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Ritmo de sección ---------- */
+.section-y {
+  padding-block: clamp(4.5rem, 3rem + 8vw, 9rem);
+}
+
+.rule {
+  border-top: 1px solid var(--color-line);
+}
+
+/* ---------- Glassmorphism (marcado) ---------- */
+.glass {
+  background: color-mix(in srgb, var(--color-paper) 55%, transparent);
+  backdrop-filter: blur(26px) saturate(155%);
+  -webkit-backdrop-filter: blur(26px) saturate(155%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 0 0 1px rgba(20, 32, 26, 0.04),
+    0 26px 55px -30px rgba(20, 32, 26, 0.55);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--color-paper) 74%, transparent);
+  backdrop-filter: blur(30px) saturate(165%);
+  -webkit-backdrop-filter: blur(30px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 24px 55px -28px rgba(20, 32, 26, 0.5);
+}
+
+.glass-dark {
+  background: color-mix(in srgb, var(--color-ink) 82%, transparent);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* ---------- Movimiento ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 34s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ---------- Textura (grano sutil, quita la planitud del color plano) ---------- */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.05;
+}
+
+/* Barra de acento que crece en hover de filas */
+.row-bar {
+  position: relative;
+}
+.row-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s var(--ease-soft);
+}
+.row-bar:hover::before {
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row-bar::before {
+    transition: none;
+  }
 }
