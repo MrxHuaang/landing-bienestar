@@ -150,7 +150,7 @@ export default function Hero() {
         >
           <span className="label">Psicóloga · Pereira [Colombia]</span>
           <span className="label hidden sm:inline">Bienestar emocional</span>
-          <span className="label text-accent">©2025</span>
+          <span className="label text-accent">©2026</span>
         </motion.div>
 
         {/* Titular a todo lo ancho, con deriva horizontal por línea */}
