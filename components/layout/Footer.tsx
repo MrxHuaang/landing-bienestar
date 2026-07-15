@@ -1,6 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/icons";
+import Magnetic from "@/components/ui/Magnetic";
 import { navLinks, social, contact } from "@/lib/config";
 import { scrollToHash } from "@/lib/scroll";
 
@@ -12,9 +16,34 @@ const socials = [
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const footerRef = useRef<HTMLElement>(null);
+
+  /* Wordmark gigante deslizándose en horizontal con el scroll. */
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".footer-wordmark",
+        { xPercent: 6 },
+        {
+          xPercent: -14,
+          ease: "none",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top bottom",
+            end: "bottom bottom",
+            scrub: 0.8,
+          },
+        },
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <footer className="relative overflow-hidden px-5 pt-16 sm:px-8">
+    <footer ref={footerRef} className="relative overflow-hidden px-5 pt-16 sm:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="rule grid gap-10 pt-10 md:grid-cols-12">
           {/* Marca */}
@@ -28,16 +57,17 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex gap-3">
               {socials.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="glass flex h-11 w-11 items-center justify-center rounded-xl text-ink transition-colors hover:text-accent"
-                >
-                  <Icon className="h-[18px] w-[18px]" />
-                </a>
+                <Magnetic key={label} strength={0.4}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="glass flex h-11 w-11 items-center justify-center rounded-xl text-ink transition-colors hover:text-accent"
+                  >
+                    <Icon className="h-[18px] w-[18px]" />
+                  </a>
+                </Magnetic>
               ))}
             </div>
           </div>
@@ -93,10 +123,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Wordmark gigante */}
+        {/* Wordmark gigante — se desliza con el scroll */}
         <div className="mt-12 overflow-hidden">
-          <p className="text-mega whitespace-nowrap text-ink/[0.07] select-none">
-            Angela Sophia
+          <p className="footer-wordmark text-mega whitespace-nowrap text-ink/[0.07] select-none will-change-transform">
+            Angela Sophia — Angela Sophia
           </p>
         </div>
 

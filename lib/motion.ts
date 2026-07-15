@@ -1,6 +1,29 @@
 import type { Variants } from "framer-motion";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+/* ---------- Tokens de motion (espejo de @theme en globals.css) ---------- */
+
+/** Duraciones en segundos (uso GSAP/Framer). CSS usa --dur-*. */
+export const DUR = {
+  fast: 0.15,
+  base: 0.3,
+  slow: 0.5,
+  hero: 0.9,
+} as const;
+
+/** Easings como cubic-bezier arrays (Framer) y strings (GSAP). */
+export const EASE = [0.22, 1, 0.36, 1] as const; // out-quint
+export const EASE_EXPO = [0.16, 1, 0.3, 1] as const;
+/** Equivalentes GSAP. */
+export const GSAP_EASE = "power3.out";
+export const GSAP_EASE_EXPO = "expo.out";
+
+/** Gate para coreografías JS: true si el usuario prefiere menos movimiento. */
+export function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 /** Contenedor con stagger para revelar hijos en secuencia. */
 export const staggerContainer: Variants = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -12,8 +12,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import Button from "@/components/ui/Button";
+import Magnetic from "@/components/ui/Magnetic";
 import { ArrowDownIcon } from "@/components/ui/icons";
 import { scrollToHash } from "@/lib/scroll";
+import { DUR, EASE, GSAP_EASE_EXPO } from "@/lib/motion";
 
 const lines = [
   { text: "Bienvenido a un", accent: false, drift: -5 },
@@ -50,10 +52,8 @@ function TiltPortrait() {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       style={{ rotateX, rotateY, transformPerspective: 900 }}
-      initial={{ opacity: 0, scale: 0.95, rotate: -2 }}
-      animate={{ opacity: 1, scale: 1, rotate: -2 }}
+      initial={{ rotate: -2 }}
       whileHover={{ rotate: 0 }}
-      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className="relative mx-auto w-full max-w-sm"
     >
       <div className="hero-portrait relative aspect-[4/5] overflow-hidden rounded-2xl shadow-[0_30px_60px_-30px_rgba(20,32,26,0.5)]">
@@ -63,7 +63,7 @@ function TiltPortrait() {
           fill
           priority
           sizes="(max-width: 1024px) 80vw, 40vw"
-          className="object-cover object-center"
+          className="hero-portrait-img object-cover object-center"
         />
         <div className="glass absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl px-4 py-2.5">
           <span className="label-sm text-ink">Angela Sophia</span>
@@ -77,11 +77,39 @@ function TiltPortrait() {
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  /* Coreografía de entrada — una sola timeline bien ensayada.
+     useLayoutEffect setea estados iniciales antes del primer paint (sin flash). */
+  useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: GSAP_EASE_EXPO } });
+
+      tl.from(".hero-rule", { scaleX: 0, transformOrigin: "left", duration: 0.9 })
+        .from(
+          ".hero-meta",
+          { yPercent: 120, duration: 0.6, stagger: 0.06 },
+          "-=0.55",
+        )
+        .from(
+          ".hero-line-inner",
+          { yPercent: 112, duration: DUR.hero, stagger: 0.11 },
+          "-=0.35",
+        )
+        .fromTo(
+          ".hero-portrait",
+          { clipPath: "inset(100% 0% 0% 0%)" },
+          { clipPath: "inset(0% 0% 0% 0%)", duration: 1.05 },
+          "-=0.75",
+        )
+        .fromTo(
+          ".hero-portrait-img",
+          { scale: 1.35 },
+          { scale: 1, duration: 1.35, ease: "power3.out" },
+          "<",
+        );
+
+      /* Scroll: parallax vertical + deriva horizontal por línea. */
       gsap.to(".hero-portrait", {
         yPercent: 12,
         ease: "none",
@@ -103,9 +131,8 @@ export default function Hero() {
         },
       });
       gsap.utils.toArray<HTMLElement>(".hero-line").forEach((el) => {
-        const drift = Number(el.dataset.drift ?? 0);
         gsap.to(el, {
-          xPercent: drift,
+          xPercent: Number(el.dataset.drift ?? 0),
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -120,20 +147,6 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const container = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-  };
-  const line = {
-    hidden: { opacity: 0, y: 48, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] as const },
-    },
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -141,36 +154,38 @@ export default function Hero() {
       className="relative flex min-h-svh flex-col justify-center overflow-hidden px-5 pt-28 pb-10 sm:px-8"
     >
       <div className="mx-auto w-full max-w-6xl">
-        {/* Meta row */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="rule flex items-center justify-between gap-4 pt-4 text-muted"
-        >
-          <span className="label">Psicóloga · Pereira [Colombia]</span>
-          <span className="label hidden sm:inline">Bienestar emocional</span>
-          <span className="label text-accent">©2026</span>
-        </motion.div>
+        {/* Meta row — la regla se dibuja, las etiquetas suben enmascaradas */}
+        <div className="hero-rule rule" />
+        <div className="flex items-center justify-between gap-4 pt-4 text-muted">
+          <span className="line-mask">
+            <span className="hero-meta label block">
+              Psicóloga · Pereira [Colombia]
+            </span>
+          </span>
+          <span className="line-mask hidden sm:block">
+            <span className="hero-meta label block">Bienestar emocional</span>
+          </span>
+          <span className="line-mask">
+            <span className="hero-meta label block text-accent">©2025</span>
+          </span>
+        </div>
 
-        {/* Titular a todo lo ancho, con deriva horizontal por línea */}
-        <motion.h1
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="text-mega mt-8 min-w-0 text-ink"
-        >
+        {/* Titular full-width, cascada de líneas enmascaradas */}
+        <h1 className="text-mega mt-8 min-w-0 text-ink">
           {lines.map((l, i) => (
-            <motion.div
+            <span
               key={i}
-              variants={line}
               data-drift={l.drift}
-              className={`hero-line min-w-0 sm:whitespace-nowrap ${l.accent ? "text-accent" : ""}`}
+              className="hero-line line-mask min-w-0 sm:whitespace-nowrap"
             >
-              {l.text}
-            </motion.div>
+              <span
+                className={`hero-line-inner block ${l.accent ? "text-accent" : ""}`}
+              >
+                {l.text}
+              </span>
+            </span>
           ))}
-        </motion.h1>
+        </h1>
 
         <div className="mt-14 grid items-start gap-10 lg:grid-cols-12 lg:gap-8">
           {/* Copy */}
@@ -178,7 +193,7 @@ export default function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7 }}
+              transition={{ duration: 0.7, delay: 1.15, ease: EASE }}
               className="text-lead max-w-xl text-ink-soft"
             >
               Soy <span className="font-medium text-ink">Angela Sophia</span>, psicóloga
@@ -190,28 +205,32 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.82 }}
+              transition={{ duration: 0.7, delay: 1.28, ease: EASE }}
               className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <WhatsAppButton intent="consulta" size="lg">
-                Agendar sesión
-              </WhatsAppButton>
-              <Button
-                variant="outline"
-                size="lg"
-                shimmer={false}
-                onClick={() => scrollToHash("#about")}
-              >
-                Conocer más
-                <ArrowDownIcon className="h-[1.1em] w-[1.1em]" />
-              </Button>
+              <Magnetic>
+                <WhatsAppButton intent="consulta" size="lg">
+                  Agendar sesión
+                </WhatsAppButton>
+              </Magnetic>
+              <Magnetic strength={0.2}>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  shimmer={false}
+                  onClick={() => scrollToHash("#about")}
+                >
+                  Conocer más
+                  <ArrowDownIcon className="h-[1.1em] w-[1.1em]" />
+                </Button>
+              </Magnetic>
             </motion.div>
 
             {/* Lista indexada de enfoques */}
             <motion.ul
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 1 }}
+              transition={{ duration: 0.7, delay: 1.45 }}
               className="mt-12 max-w-md"
             >
               <li className="label mb-2 text-muted">Acompañamiento —</li>
@@ -229,7 +248,7 @@ export default function Hero() {
             </motion.ul>
           </div>
 
-          {/* Retrato con tilt 3D */}
+          {/* Retrato: clip-reveal en la entrada + tilt 3D al cursor */}
           <div className="order-1 lg:order-2 lg:col-span-5">
             <TiltPortrait />
           </div>
@@ -243,7 +262,7 @@ export default function Hero() {
         aria-label="Bajar a Sobre mí"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3 }}
+        transition={{ delay: 1.7 }}
         className="mx-auto mt-10 flex w-full max-w-6xl items-center justify-end gap-2 text-muted"
       >
         <span className="label">Scroll to explore</span>

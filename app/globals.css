@@ -28,7 +28,15 @@
   --font-display: var(--font-bricolage);
   --font-sans: var(--font-instrument);
 
+  /* Motion — duraciones estándar (100/300/500 + hero) */
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+  --dur-hero: 900ms;
+
+  /* Motion — easings (out-quint por defecto, expo para reveals) */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ---------- Base ---------- */
@@ -159,20 +167,42 @@ body {
 }
 
 /* ---------- Movimiento ---------- */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
+/* Pista del marquee: el desplazamiento lo maneja GSAP (reactivo a la
+   velocidad de scroll). Sin GSAP montado queda estática — contenido visible. */
 .marquee-track {
   display: inline-flex;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 34s linear infinite;
 }
-.marquee-track:hover {
-  animation-play-state: paused;
+
+/* Máscara de línea para reveals tipográficos (SplitText envuelve cada
+   línea en .line-mask > .line-inner; GSAP anima yPercent del inner). */
+.line-mask {
+  display: block;
+  overflow: clip;
+}
+
+/* Rollover de dos capas para links del nav: la copia visible sube y la
+   duplicada entra desde abajo. */
+.flip-link {
+  position: relative;
+  display: inline-block;
+  overflow: clip;
+}
+.flip-link > span {
+  display: block;
+  transition: transform var(--dur-base) var(--ease-expo);
+}
+.flip-link > span::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  color: var(--color-accent);
+}
+.flip-link:hover > span,
+.flip-link:focus-visible > span {
+  transform: translateY(-100%);
 }
 
 /* ---------- Textura (grano sutil, quita la planitud del color plano) ---------- */
@@ -203,7 +233,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .row-bar::before {
+  .row-bar::before,
+  .flip-link > span {
     transition: none;
   }
 }

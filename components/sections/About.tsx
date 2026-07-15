@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { HeartIcon, ShieldIcon, LockIcon, CheckIcon } from "@/components/ui/icons";
+import ParallaxFrame from "@/components/ui/ParallaxFrame";
+import { HeartIcon, ShieldIcon, LockIcon } from "@/components/ui/icons";
 import { fadeUp } from "@/lib/motion";
 
 const principles = [
@@ -51,7 +52,7 @@ export default function About() {
           {/* Retrato */}
           <Reveal variants={fadeUp} className="lg:col-span-5">
             <div className="relative mx-auto w-full max-w-sm lg:sticky lg:top-28">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+              <ParallaxFrame className="relative aspect-[3/4] overflow-hidden rounded-2xl">
                 <Image
                   src="/assets/profile-image.jpg"
                   alt="Ángela Sophia, psicóloga profesional en Pereira, Risaralda"
@@ -59,10 +60,10 @@ export default function About() {
                   sizes="(max-width: 1024px) 80vw, 40vw"
                   className="object-cover object-center"
                 />
-                <div className="glass absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl px-4 py-2.5">
-                  <span className="label-sm text-ink">Psicóloga · Pereira</span>
-                  <span className="index text-xs text-accent">01</span>
-                </div>
+              </ParallaxFrame>
+              <div className="glass absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl px-4 py-2.5">
+                <span className="label-sm text-ink">Psicóloga · Pereira</span>
+                <span className="index text-xs text-accent">01</span>
               </div>
             </div>
           </Reveal>

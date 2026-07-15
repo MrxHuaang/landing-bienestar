@@ -1,7 +1,9 @@
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import Magnetic from "@/components/ui/Magnetic";
 import { contact } from "@/lib/config";
+import { scaleIn } from "@/lib/motion";
 
 const details = [
   { label: "Correo", value: contact.email, href: `mailto:${contact.email}` },
@@ -19,7 +21,7 @@ export default function Contact() {
           title="Da el primer paso hacia tu bienestar"
         />
 
-        <Reveal className="mt-14">
+        <Reveal className="mt-14" variants={scaleIn}>
           <div className="glass-dark relative overflow-hidden rounded-[2rem] p-8 text-bone sm:p-12">
             <div className="relative grid gap-12 lg:grid-cols-2">
               {/* Izquierda: CTA */}
@@ -33,9 +35,11 @@ export default function Contact() {
                   compromiso. Sin costo, sin presión.
                 </p>
                 <div className="mt-8">
-                  <WhatsAppButton intent="consulta" size="lg">
-                    Escríbeme por WhatsApp
-                  </WhatsAppButton>
+                  <Magnetic>
+                    <WhatsAppButton intent="consulta" size="lg">
+                      Escríbeme por WhatsApp
+                    </WhatsAppButton>
+                  </Magnetic>
                 </div>
               </div>
 

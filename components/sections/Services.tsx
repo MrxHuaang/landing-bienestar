@@ -3,6 +3,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Marquee from "@/components/ui/Marquee";
 import Button from "@/components/ui/Button";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import Magnetic from "@/components/ui/Magnetic";
 import {
   UserIcon,
   MonitorIcon,
@@ -202,16 +203,17 @@ export default function Services() {
             </div>
             <div className="flex gap-3">
               {socials.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="glass flex h-14 w-14 items-center justify-center rounded-2xl text-ink transition-transform duration-300 hover:-translate-y-1 hover:text-accent"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
+                <Magnetic key={label} strength={0.4}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="glass flex h-14 w-14 items-center justify-center rounded-2xl text-ink transition-colors duration-300 hover:text-accent"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </a>
+                </Magnetic>
               ))}
             </div>
           </Reveal>
