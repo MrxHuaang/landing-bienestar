@@ -254,25 +254,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Scroll */}
-      <motion.button
-        type="button"
-        onClick={() => scrollToHash("#about")}
-        aria-label="Bajar a Sobre mí"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.7 }}
-        className="mx-auto mt-10 flex w-full max-w-6xl items-center justify-end gap-2 text-muted"
-      >
-        <span className="label">Scroll to explore</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDownIcon className="h-4 w-4" />
-        </motion.span>
-      </motion.button>
     </section>
   );
 }
