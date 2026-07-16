@@ -39,7 +39,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Ángela Sophia" }],
   alternates: { canonical: "/" },
-  icons: { icon: "/assets/favicon.png", apple: "/assets/favicon.png" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/assets/favicon.png", type: "image/png" },
+    ],
+    apple: "/assets/favicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "es_CO",

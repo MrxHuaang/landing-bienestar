@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, Fragment } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import Magnetic from "@/components/ui/Magnetic";
+import Logo from "@/components/ui/Logo";
 import { MenuIcon, CloseIcon } from "@/components/ui/icons";
 import { navLinks } from "@/lib/config";
 import { scrollToHash } from "@/lib/scroll";
@@ -51,9 +52,7 @@ export default function Navbar() {
           onClick={(e) => go(e, "#home")}
           className="group flex items-center gap-2 font-display text-lg font-bold tracking-tight text-ink"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[0.7rem] text-white transition-transform duration-300 group-hover:rotate-12">
-            AS
-          </span>
+          <Logo className="h-7 w-7 transition-transform duration-300 group-hover:rotate-12" />
           Angela Sophia
         </a>
 
