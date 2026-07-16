@@ -182,6 +182,13 @@ body {
   overflow: clip;
 }
 
+/* .text-mega usa line-height 0.86 (apretado a propósito); sin este
+   padding las descendentes (g, y, p) quedan cortadas por el clip. */
+.text-mega .line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
 /* Rollover de dos capas para links del nav: la copia visible sube y la
    duplicada entra desde abajo. */
 .flip-link {

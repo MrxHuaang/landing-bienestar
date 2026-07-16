@@ -165,9 +165,6 @@ export default function Hero() {
           <span className="line-mask hidden sm:block">
             <span className="hero-meta label block">Bienestar emocional</span>
           </span>
-          <span className="line-mask">
-            <span className="hero-meta label block text-accent">©2025</span>
-          </span>
         </div>
 
         {/* Titular full-width, cascada de líneas enmascaradas */}
