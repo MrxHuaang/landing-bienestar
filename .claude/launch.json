@@ -2,18 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "notion-local",
+      "name": "angela-sophia",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "dev",
-        "--prefix",
-        "C:\\Users\\juanj\\OneDrive\\Escritorio\\Proyectos\\Next\\notion-local",
-        "--",
-        "-p",
-        "3999"
-      ],
-      "port": 3999
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
     }
   ]
 }
