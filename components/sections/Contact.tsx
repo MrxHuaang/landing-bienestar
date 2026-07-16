@@ -6,9 +6,8 @@ import { contact } from "@/lib/config";
 import { scaleIn } from "@/lib/motion";
 
 const details = [
-  { label: "Correo", value: contact.email, href: `mailto:${contact.email}` },
   { label: "Ubicación", value: contact.location },
-  { label: "Horario", value: `${contact.schedule.weekdays} · ${contact.schedule.weekend}` },
+  { label: "Modalidad", value: "Presencial y online" },
 ];
 
 export default function Contact() {
