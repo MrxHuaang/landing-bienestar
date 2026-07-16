@@ -110,14 +110,6 @@ export default function Footer() {
                   WhatsApp
                 </a>
               </li>
-              <li>
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="transition-colors hover:text-accent"
-                >
-                  {contact.email}
-                </a>
-              </li>
               <li className="text-muted">{contact.location}</li>
             </ul>
           </div>
