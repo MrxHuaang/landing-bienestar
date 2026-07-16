@@ -28,6 +28,14 @@ export function TikTokIcon({ className, ...props }: IconProps) {
   );
 }
 
+export function YouTubeIcon({ className, ...props }: IconProps) {
+  return (
+    <svg viewBox="0 0 576 512" fill="currentColor" className={className} aria-hidden {...props}>
+      <path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.1 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232 336V176l142.7 80L232 336z" />
+    </svg>
+  );
+}
+
 /* --- UI (stroke, viewBox 24) --- */
 
 function Stroke({ className, children, ...props }: IconProps & { children: React.ReactNode }) {

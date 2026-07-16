@@ -26,6 +26,7 @@ export const WHATSAPP_NUMBER = "573215841483";
 export const social = {
   instagram: "https://www.instagram.com/soyangelacordoba/",
   tiktok: "https://www.tiktok.com/@psic.angelasophia",
+  youtube: "https://youtube.com/@soyangelacordoba?si=GS9VyeXm9OdK0Ktc",
   whatsapp: `https://wa.me/${WHATSAPP_NUMBER}`,
 } as const;
 

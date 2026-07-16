@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { InstagramIcon, TikTokIcon, YouTubeIcon, WhatsAppIcon } from "@/components/ui/icons";
 import Magnetic from "@/components/ui/Magnetic";
 import { navLinks, social, contact } from "@/lib/config";
 import { scrollToHash } from "@/lib/scroll";
@@ -11,6 +11,7 @@ import { scrollToHash } from "@/lib/scroll";
 const socials = [
   { href: social.instagram, label: "Instagram", Icon: InstagramIcon },
   { href: social.tiktok, label: "TikTok", Icon: TikTokIcon },
+  { href: social.youtube, label: "YouTube", Icon: YouTubeIcon },
   { href: social.whatsapp, label: "WhatsApp", Icon: WhatsAppIcon },
 ];
 

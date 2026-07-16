@@ -12,6 +12,7 @@ import {
   GiftIcon,
   InstagramIcon,
   TikTokIcon,
+  YouTubeIcon,
   WhatsAppIcon,
 } from "@/components/ui/icons";
 import { social, WHATSAPP_COMMUNITY_URL } from "@/lib/config";
@@ -79,6 +80,7 @@ const services: Service[] = [
 const socials = [
   { href: social.instagram, label: "Instagram", Icon: InstagramIcon },
   { href: social.tiktok, label: "TikTok", Icon: TikTokIcon },
+  { href: social.youtube, label: "YouTube", Icon: YouTubeIcon },
   { href: social.whatsapp, label: "WhatsApp", Icon: WhatsAppIcon },
 ];
 
