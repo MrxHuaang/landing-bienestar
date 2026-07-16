@@ -25,7 +25,7 @@ export default function Contact() {
             <div className="relative grid gap-12 lg:grid-cols-2">
               {/* Izquierda: CTA */}
               <div>
-                <span className="label text-accent">[ Escríbeme ]</span>
+                <span className="label text-accent-soft">[ Escríbeme ]</span>
                 <h3 className="text-h1 mt-4 text-bone">
                   Estoy aquí para acompañarte
                 </h3>
@@ -44,26 +44,17 @@ export default function Contact() {
 
               {/* Derecha: detalles indexados */}
               <div>
-                {details.map(({ label, value, href }, i) => (
+                {details.map(({ label, value }, i) => (
                   <div
                     key={label}
                     className="grid grid-cols-12 items-baseline gap-3 border-t border-white/15 py-5"
                   >
-                    <span className="index col-span-2 text-sm text-accent">
+                    <span className="index col-span-2 text-sm text-accent-soft">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="label-sm col-span-3 text-bone/60">{label}</span>
                     <div className="col-span-7">
-                      {href ? (
-                        <a
-                          href={href}
-                          className="text-bone transition-colors hover:text-accent"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <span className="text-bone">{value}</span>
-                      )}
+                      <span className="text-bone">{value}</span>
                     </div>
                   </div>
                 ))}
